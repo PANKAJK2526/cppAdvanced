@@ -3,7 +3,6 @@
 #include<QVBoxLayout>
 #include<QPushButton>
 #include<QProgressBar>
-#include<QThread>
 #include<QTimer>
 
 int main(int argc, char *argv[])
@@ -29,7 +28,7 @@ int main(int argc, char *argv[])
 	});
 
 	window.setLayout(layout);
-	window.setWindowTitle("Multithreading ProgressBar");
+	window.setWindowTitle("ProgressBars");
 	window.show();
 
 	return app.exec();

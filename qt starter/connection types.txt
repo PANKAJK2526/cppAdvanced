@@ -1,0 +1,60 @@
+Sure! Here's a clear explanation of the most commonly used `Qt::ConnectionType` values in Qt's `connect()`:
+
+---
+
+### ✅ **`Qt::AutoConnection`** (default)
+
+* **Behavior**: Chooses the connection type automatically based on thread context.
+* **If sender and receiver are in the same thread**: Uses **DirectConnection**.
+* **If they are in different threads**: Uses **QueuedConnection**.
+* **Use case**: Most common. Safe default when you're not sure.
+
+---
+
+### 🔁 **`Qt::DirectConnection`**
+
+* **Behavior**: The slot is called **immediately** in the **sender's thread**.
+* **Use case**: When you want synchronous behavior and both objects are in the same thread.
+* ⚠️ If used across threads, the slot will be invoked in the wrong thread → can cause race conditions.
+
+---
+
+### 📬 **`Qt::QueuedConnection`**
+
+* **Behavior**: The slot is **queued and executed later** in the **receiver's thread** via its event loop.
+* **Use case**: When sender and receiver are in **different threads** and you want safe async behavior.
+* Requires the receiver to have a **running event loop**.
+
+---
+
+### 🧪 **`Qt::BlockingQueuedConnection`**
+
+* **Behavior**: Like `QueuedConnection`, but the **sender blocks** until the slot has finished executing.
+* **Use case**: Rare. Used when the sender must wait for the result of the slot. **Dangerous if both objects are in the same thread** → deadlock.
+
+---
+
+### 🧵 **`Qt::UniqueConnection`**
+
+* **Behavior**: Prevents duplicate connections between the same signal and slot.
+* **Use**: Can be OR’ed with other types:
+
+```cpp
+QObject::connect(sender, &Sender::signal, receiver, &Receiver::slot, Qt::UniqueConnection);
+```
+
+---
+
+### Summary Table:
+
+| Connection Type            | Called In Thread    | Sync/Async   | Use Case                                     |
+| -------------------------- | ------------------- | ------------ | -------------------------------------------- |
+| `AutoConnection`           | Sender or Receiver  | Auto         | Default & safe                               |
+| `DirectConnection`         | Sender's thread     | Synchronous  | Same thread, needs immediate call            |
+| `QueuedConnection`         | Receiver's thread   | Asynchronous | Cross-thread safe, needs event loop          |
+| `BlockingQueuedConnection` | Receiver's thread   | Blocking     | Rare; sender waits for slot (avoid deadlock) |
+| `UniqueConnection`         | Prevents duplicates | —            | Avoid multiple same signal-slot connections  |
+
+---
+
+Let me know if you want example code showing each connection type in action with threads.
