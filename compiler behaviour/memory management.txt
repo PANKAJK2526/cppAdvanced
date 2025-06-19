@@ -1,0 +1,103 @@
+In C++, different types of variables are stored in **different memory segments** during program execution. Here's a detailed breakdown of **global, local, and static variables**, including **where they are stored and how memory management works**.
+
+---
+
+## 🔧 C++ Memory Layout (Simplified View)
+
+```
++-----------------------------+
+|        Stack               | <-- Local variables
++-----------------------------+
+|        Heap                | <-- Dynamically allocated memory (new, malloc)
++-----------------------------+
+|   BSS Segment (.bss)       | <-- Uninitialized global/static variables
++-----------------------------+
+|  Data Segment (.data)      | <-- Initialized global/static variables
++-----------------------------+
+|   Text Segment (.text)     | <-- Code (compiled instructions)
++-----------------------------+
+```
+
+---
+
+## 🧠 1. **Global Variables**
+
+* **Declared outside all functions**
+* **Stored in**:
+
+  * `.data` segment (if initialized)
+  * `.bss` segment (if uninitialized)
+
+**Lifetime**: Entire duration of the program (from load to exit)
+**Scope**: Global (can be accessed anywhere, if declared properly)
+
+```cpp
+int g1 = 10;    // stored in .data
+int g2;         // stored in .bss
+```
+
+---
+
+## 🧠 2. **Local Variables**
+
+* **Declared inside functions or blocks**
+* **Stored in**: **Stack**
+
+**Lifetime**: Created when function is called, destroyed when it returns
+**Scope**: Limited to the function or block
+
+```cpp
+void func() {
+    int x = 5; // stored in stack
+}
+```
+
+---
+
+## 🧠 3. **Static Variables**
+
+* Can be **local (within functions)** or **global (outside functions)**
+* **Stored in**:
+
+  * `.data` segment (if initialized)
+  * `.bss` segment (if uninitialized)
+
+**Lifetime**: Whole program (like globals)
+**Scope**: Depends on where they are declared
+
+```cpp
+static int s1 = 10; // global static, stored in .data
+
+void func() {
+    static int count = 0; // local static, stored in .data
+}
+```
+
+---
+
+## 📦 Summary Table
+
+| Variable Type        | Scope          | Lifetime          | Memory Segment   |
+| -------------------- | -------------- | ----------------- | ---------------- |
+| **Global**           | Global         | Entire Program    | `.data` / `.bss` |
+| **Local**            | Function/Block | Function Scope    | Stack            |
+| **Static Local**     | Function       | Entire Program    | `.data` / `.bss` |
+| **Static Global**    | File           | Entire Program    | `.data` / `.bss` |
+| **Heap (via `new`)** | Manual         | Manual (`delete`) | Heap             |
+
+---
+
+## 🛠️ Example for All in One
+
+```cpp
+int g_var = 1;           // global, .data
+int g_uninit;            // global, .bss
+
+void test() {
+    int local_var = 2;   // stack
+    static int stat_var = 3; // static local, .data
+    int* heap_var = new int(4); // heap
+}
+```
+
+---

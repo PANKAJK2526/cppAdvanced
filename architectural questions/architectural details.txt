@@ -1,0 +1,177 @@
+**Title: Distributed Real-Time File Sync UI Using C++ Qt Framework**
+
+---
+
+## Overview
+
+This system enables real-time synchronization and editing of a shared file across multiple user interface entities located on different networks. The design is event-driven, asynchronous, and non-blocking, using multithreading and network communication over WebSockets. The architecture ensures that all UI clients reflect real-time changes made either externally (via a text editor) or by any client.
+
+---
+
+## Functional Requirements
+
+1. **Multiple UI Clients (Entities)**
+
+   * Each client is a Qt-based GUI with:
+
+     * A `QLabel` to display current file content.
+     * A `QTextEdit` or `QLineEdit` for editing.
+     * An `Upload` button to send changes to the server.
+
+2. **File Content Synchronization**
+
+   * Any changes made to the file on the server's local disk should automatically update all UI clients.
+   * Clients can send updates to the server, which then propagates them to all connected clients.
+
+3. **Non-blocking Architecture**
+
+   * All I/O operations are asynchronous and use worker threads to avoid blocking the UI or event loop.
+   * Real-time updates are pushed using WebSockets.
+
+4. **Cross-network Communication**
+
+   * All UI entities are on different networks and connect to a central backend server using WebSockets.
+
+---
+
+## System Architecture
+
+### 1. **Central Backend Server** (Qt Console App or Service)
+
+**Responsibilities:**
+
+* Monitor the shared file on disk using `QFileSystemWatcher`.
+* Maintain the current file content in memory (`ContentManager`).
+* Handle incoming WebSocket connections from clients (`QWebSocketServer`).
+* Broadcast file content updates to all connected clients.
+* Receive updated content from clients and write to file.
+
+**Components:**
+
+* `FileMonitor`:
+
+  * Uses `QFileSystemWatcher` to detect file changes.
+  * Triggers background read and emits signal with new content.
+
+* `ContentManager`:
+
+  * Stores the current content of the file.
+  * Thread-safe access using `QMutex`.
+  * Emits signals on update.
+
+* `ClientHandler`:
+
+  * Manages each WebSocket client.
+  * Sends/receives JSON messages.
+
+* `ThreadPool/IOTasks`:
+
+  * Background thread execution for file read/write.
+
+### 2. **UI Client (x3, Qt GUI App)**
+
+**Responsibilities:**
+
+* Display the latest file content.
+* Send updates to the backend server when the user submits new content.
+* Receive real-time updates from the server.
+* Non-blocking UI using Qt’s event system.
+
+**Components:**
+
+* `MainWindow`:
+
+  * Contains `QLabel`, `QLineEdit`, and `QPushButton`.
+
+* `WebSocketClient`:
+
+  * Manages connection to the backend server using `QWebSocket`.
+  * Listens for update messages and emits signals.
+
+* `UIUpdater`:
+
+  * Connected to WebSocket signals.
+  * Updates UI widgets on `contentChanged` signal.
+
+---
+
+## Data Flow
+
+### File Changed on Server:
+
+1. `QFileSystemWatcher` detects the change.
+2. Backend reads file in background thread.
+3. Updates memory content.
+4. Broadcasts new content to all clients.
+
+### Upload from Client:
+
+1. Client sends updated content over WebSocket in JSON format.
+2. Server receives and updates in-memory model.
+3. Server writes to file (in thread).
+4. Server broadcasts updated content to all clients.
+
+---
+
+## Communication Protocol
+
+JSON messages over WebSocket:
+
+### Client → Server:
+
+```json
+{
+  "type": "update_request",
+  "content": "new content from user"
+}
+```
+
+### Server → Clients:
+
+```json
+{
+  "type": "content_update",
+  "content": "updated file content"
+}
+```
+
+---
+
+## Technologies
+
+| Component       | Technology                    |
+| --------------- | ----------------------------- |
+| GUI Clients     | C++ with Qt Widgets           |
+| Server          | C++ with Qt Core + WebSockets |
+| Communication   | QWebSocket / QWebSocketServer |
+| File Monitoring | QFileSystemWatcher            |
+| Threads         | QtConcurrent / QThreadPool    |
+| Protocol        | JSON over WebSocket           |
+
+---
+
+## Optional Enhancements
+
+* Debounce file system events.
+* Add versioning or timestamp to prevent loops.
+* Auto-reconnect clients on network failure.
+* TLS WebSocket support (wss\://).
+* Authentication for clients.
+
+---
+
+## Summary
+
+* Real-time, cross-network file sync.
+* Event-driven, multithreaded, non-blocking architecture.
+* Central backend coordinates all updates.
+* Clients reflect and propagate changes efficiently.
+
+---
+
+## Next Steps
+
+* Implement backend server in Qt.
+* Develop reusable Qt widget for client.
+* Add reconnection and error handling.
+* Package as CMake project for deployment.

@@ -1,0 +1,85 @@
+Here are **medium-level string and array manipulation problems** in **C++ without using STL**, ideal for interview preparation. These questions focus on fundamental programming and problem-solving skills without relying on STL containers like `vector`, `map`, or `set`.
+
+---
+
+## ✅ **String Manipulation Questions (without STL)**
+
+1. **Remove Duplicate Characters From a String**
+
+   * Input: `"programming"` → Output: `"progamin"`
+
+2. **Check if Two Strings Are Anagrams**
+
+   * Input: `"listen", "silent"` → Output: `true`
+
+3. **Reverse Words in a Sentence**
+
+   * Input: `"I am here"` → Output: `"here am I"`
+
+4. **Find the First Non-Repeating Character**
+
+   * Input: `"geeksforgeeks"` → Output: `'f'`
+
+5. **Check if a String is a Palindrome (Ignore Case, Spaces)**
+
+   * Input: `"A man a plan a canal Panama"` → Output: `true`
+
+6. **Compress a String (Run Length Encoding)**
+
+   * Input: `"aaabbc"` → Output: `"a3b2c1"`
+
+7. **Remove All Occurrences of a Character**
+
+   * Input: `"banana", 'a'` → Output: `"bnn"`
+
+8. **Convert Lowercase to Uppercase (and vice versa)**
+
+   * Input: `"HeLLo"` → Output: `"hEllO"`
+
+9. **Count and Print Frequency of Each Character**
+
+   * Input: `"banana"` → Output: `b:1, a:3, n:2`
+
+10. **Check if a String Has All Unique Characters**
+
+---
+
+## ✅ **Array Manipulation Questions (without STL)**
+
+1. **Remove Duplicates From a Sorted Array**
+
+   * Input: `[1, 1, 2, 2, 3]` → Output: `[1, 2, 3]`
+
+2. **Find the Second Largest Element in an Array**
+
+   * Input: `[10, 20, 4, 45, 99]` → Output: `45`
+
+3. **Reverse an Array In-Place**
+
+   * Input: `[1, 2, 3, 4]` → Output: `[4, 3, 2, 1]`
+
+4. **Left Rotate Array by k Positions**
+
+   * Input: `[1, 2, 3, 4, 5], k = 2` → Output: `[3, 4, 5, 1, 2]`
+
+5. **Find the Missing Number in an Array of 1 to n**
+
+   * Input: `[1, 2, 4, 5]` → Output: `3`
+
+6. **Find All Pairs That Sum to a Given Number**
+
+   * Input: `[1, 2, 3, 4], sum=5` → Output: `(1,4), (2,3)`
+
+7. **Rearrange Array Elements so that Even Index has Even Numbers**
+
+   * Input: `[3, 6, 1, 8, 4, 5]` → Output: e.g., `[6, 3, 4, 1, 8, 5]`
+
+8. **Sort an Array of 0s, 1s, and 2s (Dutch National Flag Problem)**
+
+   * Input: `[0, 1, 2, 0, 1, 2]` → Output: `[0, 0, 1, 1, 2, 2]`
+
+9. **Find the Majority Element (Appears More Than n/2 Times)**
+
+   * Input: `[3, 3, 4, 2, 4, 4, 2, 4, 4]` → Output: `4`
+
+10. **Merge Two Sorted Arrays Without Extra Space**

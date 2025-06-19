@@ -1,0 +1,94 @@
+The compilation process in C++ consists of **four main stages**. These stages transform human-readable source code into machine-executable binary code. Here's a breakdown:
+
+---
+
+### **1. Preprocessing**
+
+* **Tool**: Preprocessor (`cpp`)
+* **Input**: `.cpp` source file
+* **Output**: Pure source code with all macros, includes, and directives expanded
+
+**What happens**:
+
+* `#include` files are inserted
+* `#define` macros are expanded
+* `#ifdef`, `#ifndef`, `#if` conditions are resolved
+* Comments are removed
+
+📝 **Command (optional step)**:
+
+```bash
+g++ -E file.cpp -o file.i
+```
+
+---
+
+### **2. Compilation**
+
+* **Tool**: Compiler (`g++`, `clang++`)
+* **Input**: Preprocessed code
+* **Output**: Assembly code (often `.s` file)
+
+**What happens**:
+
+* Syntax and semantic checks
+* Converts C++ code to assembly instructions for the target CPU
+* Optimizations may begin here
+
+📝 **Command**:
+
+```bash
+g++ -S file.i -o file.s
+```
+
+---
+
+### **3. Assembly**
+
+* **Tool**: Assembler (`as`)
+* **Input**: Assembly code
+* **Output**: Object code (binary, `.o` or `.obj`)
+
+**What happens**:
+
+* Converts assembly to machine-level binary
+* Creates relocatable object files
+
+📝 **Command**:
+
+```bash
+g++ -c file.s -o file.o
+```
+
+---
+
+### **4. Linking**
+
+* **Tool**: Linker (`ld`)
+* **Input**: One or more object files
+* **Output**: Executable file (e.g., `a.out`, `program.exe`)
+
+**What happens**:
+
+* Resolves function calls and variable references across object files and libraries
+* Links in standard libraries (like `libstdc++`)
+* Produces a final executable
+
+📝 **Command**:
+
+```bash
+g++ file.o -o program
+```
+
+---
+
+### **Summary Table**
+
+| Stage         | Input  | Output     | Tool Used    |
+| ------------- | ------ | ---------- | ------------ |
+| Preprocessing | `.cpp` | `.i`       | Preprocessor |
+| Compilation   | `.i`   | `.s`       | Compiler     |
+| Assembly      | `.s`   | `.o`       | Assembler    |
+| Linking       | `.o`   | Executable | Linker       |
+
+---
