@@ -1,3 +1,4 @@
 */main
 *.stash
 gtest framework/build/*
+gtest framework/demo_calculator_user/build/*
