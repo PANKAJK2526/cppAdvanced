@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/main_exec.dir/main.cpp.o -o main_exec  /usr/local/lib/libcalculator.a 
