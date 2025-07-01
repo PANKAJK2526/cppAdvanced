@@ -1,0 +1,171 @@
+Smart pointers in C++ solve several common **memory management** issues that arise when using **raw pointers**:
+
+---
+
+### ✅ 1. **Memory Leaks**
+
+#### 🔴 Problem (raw pointer):
+
+```cpp
+void leakMemory() {
+    int* ptr = new int(10);
+    // Forgot to delete ptr => memory leak
+}
+```
+
+#### ✅ Solution (smart pointer):
+
+```cpp
+#include <memory>
+
+void noLeak() {
+    std::unique_ptr<int> ptr = std::make_unique<int>(10);
+    // Automatically deallocated when ptr goes out of scope
+}
+```
+
+---
+
+### ✅ 2. **Dangling Pointers (Use-after-free)**
+
+#### 🔴 Problem:
+
+```cpp
+void danglingPointer() {
+    int* ptr = new int(5);
+    delete ptr;
+    *ptr = 10;  // undefined behavior (use-after-free)
+}
+```
+
+#### ✅ Solution:
+
+```cpp
+#include <memory>
+
+void safePointer() {
+    std::unique_ptr<int> ptr = std::make_unique<int>(5);
+    // After going out of scope, memory is safely freed and can't be reused
+}
+```
+
+---
+
+### ✅ 3. **Double Delete**
+
+#### 🔴 Problem:
+
+```cpp
+void doubleDelete() {
+    int* ptr = new int(5);
+    delete ptr;
+    delete ptr;  // double delete => undefined behavior
+}
+```
+
+#### ✅ Solution:
+
+```cpp
+#include <memory>
+
+void safeDelete() {
+    std::unique_ptr<int> ptr = std::make_unique<int>(5);
+    // Memory will be deleted only once automatically
+}
+```
+
+---
+
+### ✅ 4. **Exception Safety**
+
+#### 🔴 Problem:
+
+```cpp
+void exceptionUnsafe() {
+    int* ptr = new int(5);
+    throw std::runtime_error("error");
+    delete ptr; // never reached, memory leaked
+}
+```
+
+#### ✅ Solution:
+
+```cpp
+#include <memory>
+
+void exceptionSafe() {
+    std::unique_ptr<int> ptr = std::make_unique<int>(5);
+    throw std::runtime_error("error"); // memory auto-freed
+}
+```
+
+---
+
+### ✅ 5. **Shared Ownership**
+
+#### 🔴 Problem (manual reference counting is error-prone):
+
+```cpp
+class Shared {
+    int* data;
+public:
+    Shared() { data = new int(100); }
+    ~Shared() { delete data; }
+};
+```
+
+#### ✅ Solution:
+
+```cpp
+#include <memory>
+
+void sharedOwnership() {
+    std::shared_ptr<int> p1 = std::make_shared<int>(100);
+    std::shared_ptr<int> p2 = p1;  // reference count increases
+}
+```
+
+---
+
+### ✅ 6. **Cyclic References (solved using `weak_ptr`)**
+
+#### 🔴 Problem:
+
+```cpp
+struct B;
+struct A {
+    std::shared_ptr<B> b;
+};
+struct B {
+    std::shared_ptr<A> a; // strong reference cycle => memory leak
+};
+```
+
+#### ✅ Solution:
+
+```cpp
+#include <memory>
+
+struct B;
+struct A {
+    std::shared_ptr<B> b;
+};
+struct B {
+    std::weak_ptr<A> a;  // weak_ptr breaks the cycle
+};
+```
+
+---
+
+### Summary Table
+
+| Problem          | Solution     |
+| ---------------- | ------------ |
+| Memory leak      | `unique_ptr` |
+| Dangling pointer | `unique_ptr` |
+| Double delete    | `unique_ptr` |
+| Exception safety | `unique_ptr` |
+| Shared ownership | `shared_ptr` |
+| Cyclic reference | `weak_ptr`   |
+
+Want a real-world project example using these?

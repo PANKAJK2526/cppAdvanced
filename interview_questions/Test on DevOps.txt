@@ -1,0 +1,88 @@
+Here is the **refined list of medium-level CI/CD and DevOps interview questions**,
+
+---
+
+### **CI/CD General**
+
+1. What is the difference between Continuous Integration, Continuous Delivery, and Continuous Deployment?
+2. How do you handle rollback in CI/CD pipelines?
+3. Explain blue-green deployment and how it’s implemented in a CI/CD pipeline.
+4. What strategies can you use to optimize build and deployment speed?
+5. How do you implement canary releases in your deployment pipeline?
+6. What are the key stages of a typical CI/CD pipeline?
+7. How do you handle secrets and credentials securely in a CI/CD pipeline?
+8. How would you manage artifacts between CI and CD stages?
+9. How do you manage configuration across environments in CI/CD?
+10. What are the best practices for versioning builds in CI/CD pipelines?
+
+---
+
+### **Git**
+
+11. How do you resolve merge conflicts in Git during automated builds?
+12. What is the difference between `git rebase` and `git merge`?
+13. How can you trigger builds on specific Git branches or tags in your CI system?
+14. Explain how you would use Git hooks in a CI/CD pipeline.
+15. How do you manage multiple environments (dev, staging, prod) using Git?
+16. How do you revert a faulty deployment using Git?
+
+---
+
+### **Docker**
+
+17. What is the difference between Dockerfile `COPY` and `ADD` commands?
+18. How do you optimize Docker images for faster CI builds?
+19. How do multi-stage builds in Docker help in CI/CD?
+20. What are some best practices for writing a production-ready Dockerfile?
+21. How do you handle secrets in Docker containers during CI/CD?
+22. How do you manage Docker image versioning and tagging in a CI/CD process?
+23. How do you scan Docker images for vulnerabilities as part of your pipeline?
+24. What are Docker volumes, and how do you use them in a CI/CD pipeline?
+
+---
+
+### **Jenkins**
+
+25. What are Jenkins pipelines and how do they differ from freestyle jobs?
+26. How do you create a parameterized build in Jenkins?
+27. How do you trigger downstream jobs in Jenkins?
+28. What is the difference between declarative and scripted pipelines in Jenkins?
+29. How can Jenkins be integrated with Docker?
+30. How do you set up a Jenkins agent on a new server?
+31. How do you secure a Jenkins server used in CI/CD?
+32. How do you implement parallel execution of jobs in a Jenkins pipeline?
+
+---
+
+### **Docker Compose & Kubernetes**
+
+33. How is Docker Compose useful in a CI/CD workflow?
+34. How do you manage multiple container deployments using Compose or Kubernetes?
+35. How do you handle rolling updates in Kubernetes?
+36. How would you configure liveness and readiness probes in Kubernetes for CI/CD?
+37. How do you perform zero-downtime deployments in Kubernetes?
+38. How do you manage secrets and config maps in Kubernetes during CI/CD?
+39. How do you set up resource requests and limits for containers in Kubernetes?
+
+---
+
+### **Monitoring & Logging**
+
+40. How do you monitor and log CI/CD pipelines?
+41. What tools can you use to track pipeline metrics and errors?
+42. How do you ensure traceability between code commits and deployed versions?
+43. What kind of alerts or notifications should you configure in your CI/CD workflow?
+
+---
+
+**Tools Covered**:
+
+* **Git**
+* **Docker**
+* **Docker Compose**
+* **Jenkins**
+* **Kubernetes**
+* **General CI/CD Concepts**
+* **Monitoring/Logging Tools**
+
+Let me know if you'd like categorized cheat sheets or implementation examples for any tool above.

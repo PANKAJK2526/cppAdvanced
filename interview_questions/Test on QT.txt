@@ -1,0 +1,105 @@
+Here’s a comprehensive list of **medium-level interview questions** on **Qt with C++**, grouped by topic for coverage:
+
+---
+
+### **Core Qt Concepts**
+
+1. What is the QObject class and why is it important?
+2. How does Qt implement the signal and slot mechanism?
+3. What are the differences between `connect()` with and without `Qt::QueuedConnection`?
+4. How does `Q_PROPERTY` work in Qt?
+5. What is the role of the meta-object compiler (moc)?
+6. How are signals and slots resolved at runtime?
+7. How do you emit a signal from a class and connect it to a slot in another thread?
+8. What is the difference between `QTimer` and `QElapsedTimer`?
+9. When would you use `QCoreApplication` vs `QApplication`?
+
+---
+
+### **UI and Widgets**
+
+10. What is the difference between `QWidget` and `QMainWindow`?
+11. What are the roles of `layout managers` in Qt?
+12. How do you implement a custom widget in Qt?
+13. What is the difference between `QTableWidget` and `QTableView`?
+14. How do you use `QStackedWidget` and when is it useful?
+15. How do you update a widget from a different thread?
+16. How do you handle drag and drop in Qt widgets?
+17. What is `QPainter` used for, and how does it work?
+
+---
+
+### **Model/View Framework**
+
+18. What are the benefits of using the Model-View-Controller pattern in Qt?
+19. What is the difference between `QStandardItemModel` and `QAbstractItemModel`?
+20. How do you implement a custom model in Qt?
+21. What role does `QItemDelegate` play?
+22. How do you implement sorting and filtering in a `QTableView`?
+23. How does data get mapped between model and view?
+
+---
+
+### **Event Handling**
+
+24. What is the Qt event loop and how does it work?
+25. How do you handle mouse and keyboard events in Qt?
+26. How do you override the event() method and why would you do it?
+27. What is an event filter and how do you use it?
+28. How is a custom event created and posted?
+
+---
+
+### **Threads and Concurrency**
+
+29. What is the difference between `QThread` and `std::thread` in Qt?
+30. How do you communicate between threads in Qt?
+31. What is `moveToThread()` used for?
+32. How do signals and slots behave across threads?
+33. How can you safely update a UI element from a worker thread?
+
+---
+
+### **File and Network I/O**
+
+34. How do you use `QFile`, `QTextStream`, and `QDataStream`?
+35. How does `QNetworkAccessManager` work?
+36. How do you perform asynchronous HTTP requests in Qt?
+37. How do you parse JSON in Qt?
+38. How do you handle QFileSystemWatcher for real-time file changes?
+
+---
+
+### **Resource Management and Build**
+
+39. What is a `.qrc` file and how is it used?
+40. What are `.moc` files and when are they generated?
+41. How does Qt Designer integrate with `.ui` files?
+42. What happens when you modify a `.ui` file manually?
+43. What are shadow builds and why are they used?
+44. How do you handle resource cleanup in Qt?
+
+---
+
+### **Qt Designer and UI Integration**
+
+45. What are `.ui` files and how are they compiled?
+46. How do you connect widgets in `.ui` to slots in your code?
+47. How do you promote widgets in Qt Designer?
+48. What is the purpose of `setupUi(this)`?
+
+---
+
+### **Miscellaneous**
+
+49. How is a singleton implemented in Qt?
+50. What are `Qt::AutoConnection`, `Qt::DirectConnection`, etc.?
+51. How do you internationalize (i18n) an application in Qt?
+52. What is `QMetaObject::invokeMethod()` and when is it used?
+53. What are some common memory leaks in Qt and how do you avoid them?
+54. How do you debug signal-slot connections?
+55. What is the role of `QApplication::exec()`?
+
+---
+
+Want me to convert these into flashcards, give detailed answers, or filter by GUI, threading, or network?

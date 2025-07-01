@@ -1,0 +1,145 @@
+Detecting a thread with **unusual activity** in Linux depends on whether you **own the code** (i.e., you can modify the C++ source) or are inspecting a **foreign binary**. Here’s a comprehensive breakdown for both cases:
+
+---
+
+## 🔧 1. **When You Own the C++ Program**
+
+You have full control. You can add diagnostics, logging, or use debuggers/profilers to monitor threads.
+
+### ✅ Tools & Techniques:
+
+#### 🧵 a) **Thread Naming (for easier debugging)**
+
+```cpp
+pthread_setname_np(pthread_self(), "worker_thread");
+```
+
+#### 🐞 b) **GDB Debugging**
+
+```bash
+gdb ./my_program
+(gdb) info threads
+(gdb) thread <n>
+(gdb) bt  # backtrace of the thread
+```
+
+#### 🔍 c) **Perf / BPF (for sampling hot threads)**
+
+```bash
+perf top -p <pid>    # shows hotspots including per-thread activity
+```
+
+#### 📊 d) **Logging Execution & Timings**
+
+Instrument your threads with:
+
+* Start/end timestamps
+* Task info
+* CPU/memory usage
+
+#### ⏱️ e) **Measure CPU Time Used by Threads**
+
+```cpp
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &ts);
+```
+
+#### 📉 f) **Valgrind / Helgrind / DRD (thread race/lock issues)**
+
+```bash
+valgrind --tool=helgrind ./my_program
+```
+
+---
+
+## 🕵️ 2. **When You Do *Not* Own the Program**
+
+You need to observe from the outside using Linux system tools.
+
+### 🔧 Tools & Methods:
+
+#### 📌 a) **Top / htop / top -H**
+
+Show all threads of a process.
+
+```bash
+top -H -p <pid>
+```
+
+* Watch for threads using high `%CPU` or stuck with no `%CPU`.
+
+#### 📌 b) **ps & status per thread**
+
+```bash
+ls /proc/<pid>/task/         # Lists thread IDs
+cat /proc/<pid>/task/<tid>/status
+```
+
+#### 🔁 c) **strace per thread**
+
+Attach to specific thread:
+
+```bash
+strace -p <tid>
+```
+
+Shows syscalls. Look for:
+
+* Stuck `futex()`
+* Too many `read()`s or `write()`s
+* Frequent context switches
+
+#### 🔍 d) **perf top / perf record**
+
+```bash
+perf top -p <pid>
+# or record and analyze later
+perf record -p <pid> -- sleep 10
+perf report
+```
+
+#### 📉 e) **pstack or gstack**
+
+Prints thread stack traces.
+
+```bash
+pstack <pid>      # or
+gdb -p <pid>
+(gdb) thread apply all bt
+```
+
+#### 🔒 f) **Look for Mutex Deadlocks (futex waits)**
+
+```bash
+grep -r "futex" /proc/<pid>/task/*/syscall
+```
+
+#### 📊 g) **pidstat (I/O, context switch, CPU usage)**
+
+```bash
+pidstat -p <pid> -t 1
+```
+
+---
+
+## 🚨 What to Look for (Signs of "Unusual Activity")
+
+| Symptom                      | Possible Issue                 |
+| ---------------------------- | ------------------------------ |
+| High CPU usage               | Busy loop, unoptimized work    |
+| Stuck in `futex()`           | Lock contention / deadlock     |
+| High context switches        | Thrashing or frequent yielding |
+| No CPU usage, no syscalls    | Deadlock, starvation           |
+| Repeated `read`/`write`/poll | Misbehaving I/O loop           |
+| Thread creation/destruction  | Leaky thread spawner           |
+
+---
+
+## 🛠️ Extra Tips
+
+* Use `BPF tools` like `bcc`/`bpftrace` for precise tracing of thread behavior.
+* Use `systemtap` to profile kernel-level thread scheduling.
+* Monitor `/proc/<pid>/task/<tid>/sched` for thread-specific metrics like voluntary/involuntary context switches.
+
+---
+
+Let me know if you want code examples of how to log unusual behavior or auto-detect anomalies in your own C++ multithreaded program.

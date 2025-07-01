@@ -1,41 +1,51 @@
 #include<iostream>
 #include<string.h>
 
-using namespaces std;
+using namespace std;
 
-class MyString {
-    char* str;
+class MyString
+{
 
 public:
-    MyString(const char* s = "") {
-        str = new char[strlen(s) + 1];
-        strcpy(str, s);
-    }
 
-    MyString(const MyString& other) {
-        str = new char[strlen(other.str) + 1];
-        strcpy(str, other.str);
-    }
+	char *str;
 
-    MyString& operator=(const MyString& other) {
-        if (this != &other) {
-            delete[] str;
-            str = new char[strlen(other.str) + 1];
-            strcpy(str, other.str);
-        }
-        return *this;
-    }
+	MyString()
+	{
+		str = nullptr;
+	}
 
-    ~MyString() {
-        delete[] str;
-    }
+	MyString(char *str)
+	{
+		this->str = new char[strlen(str)+1];;
+		strcpy(this->str,str);
+	}
+
+	MyString &operator= (const MyString &obj)
+	{
+		if(this != &obj)
+		{
+			delete[] this->str;
+			this->str = new char[strlen(obj.str)+1];
+			strcpy(this->str,obj.str);
+		}
+		return *this;
+	}
+
+	~MyString()
+	{
+		delete[] this->str;
+	}
+
 };
-
 
 int main()
 {
+	MyString ms1;
+	char msg[] = {'p','a','n','k','a','j','\0'};
+	MyString ms2(msg);
+	ms1 = ms2;
+	cout<<ms1.str<<endl<<ms2.str<<endl;
 
-    
-
-    return 0;
+	return 0;
 }

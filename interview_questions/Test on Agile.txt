@@ -1,0 +1,38 @@
+Here are medium-level interview questions on project management methodologies like Agile, specifically tailored for a software engineer role:
+
+---
+
+1. What are the key principles of the Agile Manifesto?
+2. How does Agile differ from the Waterfall model in terms of software development?
+3. What is the role of a software engineer during a daily stand-up?
+4. Can you explain what a Sprint is and how long it typically lasts?
+5. How do you estimate effort or time for a user story in Agile?
+6. What is the Definition of Done (DoD) and how do you ensure it is met?
+7. What tools have you used to manage Agile tasks and track progress?
+8. How do you handle changing requirements during an ongoing Sprint?
+9. What is a user story? How is it different from a task or a bug?
+10. What is backlog grooming (or refinement), and have you participated in it?
+11. What is the purpose of a Sprint retrospective? Can you give an example of feedback you gave or received?
+12. What is a burn-down chart and what insights can it provide?
+13. How do you collaborate with QA/testers in an Agile environment?
+14. What is pair programming and when have you used it?
+15. Can you explain the difference between Scrum and Kanban?
+16. How do you prioritize your tasks when multiple stories are assigned to you?
+17. What is technical debt? How do you manage it in Agile development?
+18. What challenges have you faced when working in an Agile team, and how did you overcome them?
+19. How do you ensure your code is ready for demo or release within the Sprint?
+20. What is continuous integration (CI) and how does it fit into Agile?
+21. How do Agile ceremonies (planning, review, retrospective) help improve team performance?
+22. What is a spike in Agile and when should it be used?
+23. How do you deal with blockers in your tasks? How do you communicate them to the team?
+24. What is velocity in Agile and how is it calculated?
+25. Have you ever contributed to story point estimation? How do you determine the right points?
+26. What is the role of a Product Owner and how do you interact with them as an engineer?
+27. What’s the importance of cross-functional teams in Agile?
+28. How do you manage code quality and refactoring during fast-paced sprints?
+29. What is an epic, and how does it relate to user stories?
+30. How do Agile principles support customer satisfaction?
+
+---
+
+Let me know if you want these filtered for a specific Agile methodology (like Scrum, Kanban, or SAFe).

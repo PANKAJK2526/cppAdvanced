@@ -1,0 +1,171 @@
+Google Test (gtest) is a **C++ testing framework** that supports **unit testing** using the principles of **Test-Driven Development (TDD)**. Here's a detailed explanation of how **test-driven programming** works in Google Test, along with the difference between `EXPECT_` and `ASSERT_`, and other important features.
+
+---
+
+## ✅ What is Test-Driven Development (TDD)?
+
+**TDD** is a software development approach where you:
+
+1. **Write a test first** that defines a new function or behavior.
+2. **Run the test** – it should fail since the feature isn't implemented yet.
+3. **Write the minimum code** to make the test pass.
+4. **Refactor** the code for clarity and efficiency.
+5. **Repeat** for every new feature.
+
+---
+
+## 🧪 How Google Test Works for TDD
+
+### 1. **Set Up the Project**
+
+Include gtest in your CMakeLists or makefile, and link with `libgtest`.
+
+### 2. **Write Test Cases First**
+
+You write test cases before writing implementation.
+
+```cpp
+#include <gtest/gtest.h>
+#include "calculator.h"
+
+TEST(CalculatorTest, Addition) {
+    Calculator calc;
+    EXPECT_EQ(calc.add(2, 3), 5);
+}
+```
+
+### 3. **Run Tests**
+
+The test will **fail** initially because `Calculator::add` may not exist yet.
+
+### 4. **Write Just Enough Code to Pass**
+
+```cpp
+// calculator.h
+class Calculator {
+public:
+    int add(int a, int b);
+};
+
+// calculator.cpp
+int Calculator::add(int a, int b) {
+    return a + b;
+}
+```
+
+### 5. **Re-run Tests**
+
+Now the test **passes**. Then you can add more tests for other functionality.
+
+---
+
+## 🆚 EXPECT\_ vs ASSERT\_
+
+These are two types of **macros** used in gtest to check conditions:
+
+| Macro Type | Continues on Failure? | Used For                                                   |
+| ---------- | --------------------- | ---------------------------------------------------------- |
+| `EXPECT_*` | ✅ Yes                 | Non-critical checks. Collects multiple failures in a test. |
+| `ASSERT_*` | ❌ No                  | Critical checks. Aborts the test immediately if failed.    |
+
+### ✅ Example
+
+```cpp
+TEST(MathTest, Division) {
+    int a = 10, b = 0;
+    EXPECT_EQ(a / 2, 5);   // Will continue
+    ASSERT_NE(b, 0);       // Will stop test here if b == 0
+    EXPECT_EQ(a / b, 5);   // This line won’t be executed if above ASSERT fails
+}
+```
+
+---
+
+## 📦 EXPECT and ASSERT Variants
+
+| Macro                                      | Description        |
+| ------------------------------------------ | ------------------ |
+| `EXPECT_EQ(val1, val2)` / `ASSERT_EQ`      | val1 == val2       |
+| `EXPECT_NE(val1, val2)` / `ASSERT_NE`      | val1 != val2       |
+| `EXPECT_LT(val1, val2)` / `ASSERT_LT`      | val1 < val2        |
+| `EXPECT_LE(val1, val2)` / `ASSERT_LE`      | val1 ≤ val2        |
+| `EXPECT_GT(val1, val2)` / `ASSERT_GT`      | val1 > val2        |
+| `EXPECT_GE(val1, val2)` / `ASSERT_GE`      | val1 ≥ val2        |
+| `EXPECT_TRUE(condition)` / `ASSERT_TRUE`   | condition is true  |
+| `EXPECT_FALSE(condition)` / `ASSERT_FALSE` | condition is false |
+
+---
+
+## 📁 gtest Project Structure Example
+
+```
+project/
+├── calculator.h
+├── calculator.cpp
+├── test/
+│   └── calculator_test.cpp
+└── CMakeLists.txt
+```
+
+---
+
+## 🧠 Best Practices in gtest with TDD
+
+1. **Write test for every public function.**
+2. Use **`ASSERT_`** when continuing would crash the test (e.g., null pointer).
+3. Use **`EXPECT_`** to test multiple independent conditions.
+4. Prefer **small, isolated test cases**.
+5. Organize tests in **test suites** (groups with similar setup).
+
+---
+
+## 🧪 Test Fixtures
+
+For multiple tests using the same setup:
+
+```cpp
+class CalculatorTest : public ::testing::Test {
+protected:
+    Calculator calc;
+
+    void SetUp() override {
+        // optional setup before each test
+    }
+};
+
+TEST_F(CalculatorTest, Add) {
+    EXPECT_EQ(calc.add(1, 2), 3);
+}
+
+TEST_F(CalculatorTest, Multiply) {
+    EXPECT_EQ(calc.multiply(2, 3), 6);
+}
+```
+
+---
+
+## 🧰 Command-Line Tools
+
+You can filter or control tests:
+
+```sh
+./my_tests --gtest_filter=CalculatorTest.*
+./my_tests --gtest_repeat=10
+./my_tests --gtest_break_on_failure
+```
+
+---
+
+## 📌 Summary
+
+| Concept    | Description                              |
+| ---------- | ---------------------------------------- |
+| TDD        | Write tests before code.                 |
+| gtest      | Framework for writing and running tests. |
+| `EXPECT_*` | Non-fatal checks, continue on failure.   |
+| `ASSERT_*` | Fatal checks, stop on failure.           |
+| Fixtures   | Shared setup across related tests.       |
+
+---
+
+Would you like a complete example project with TDD using Google Test?
