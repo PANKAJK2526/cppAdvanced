@@ -1,0 +1,3 @@
+bazel build //main:calculator_app
+./bazel-bin/main/calculator_app
+bazel test //test:calculator_test
